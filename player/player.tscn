@@ -277,6 +277,7 @@ shape = SubResource("CircleShape2D_edfc0")
 debug_color = Color(0.919321, 0, 0, 0.419608)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
