@@ -8,10 +8,14 @@ var xp = 0
 var xp_to_level_up = 25
 var currentlevel = 1
 
+
+#KARD
 const SWORD = preload("res://player/sword.tscn")
 var firstsword = SWORD.instantiate()
-
-
+var sword_rotation_speed = 150
+var swords = []
+var attackdamage = 1
+var lifesteal_scale = 0.0
 
 
 
@@ -25,7 +29,7 @@ var weapons = {
 			{"name": "Sword Count", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Rotation Speed", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Sword Damage", "level": 0, "max_level": 5, "locked": false},
-			{"name": "Sword Range", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Lifesteal", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
 		]
@@ -80,6 +84,7 @@ func _on_weapon1_pressed():
 	selected_weapon = "sword"
 	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
 	add_child(firstsword)
+	swords.append(firstsword)
 	firstsword.global_position = %Swordspawn.global_position
 	start_game()
 
@@ -116,9 +121,13 @@ func _physics_process(delta: float) -> void:
 		%HPBar.max_value = maxhealth
 	if health <= 0.0:
 		ded.emit()
+	
+	for sword in swords:
+		sword.rotation_degrees += sword_rotation_speed * delta
+		sword.damage = attackdamage
 
 func collectxp():
-	xp += randi_range(1, 5)
+	xp += randf_range(1.0, 6.9)
 	%XPBar.value = xp
 	if %XPBar.value == %XPBar.max_value:
 		levelup()
@@ -131,7 +140,7 @@ func levelup():
 	currentlevel += 1
 	%XPLabel.text = str(currentlevel)
 	show_level_up_screen()
-	health += ((maxhealth-health)/4.0)
+	health += ((maxhealth-health)/2.0)
 
 var random_upgrades = []
 func show_level_up_screen():
@@ -195,27 +204,15 @@ func _on_button_3_pressed() -> void:
 
 
 func button_pressed(button_index):
-	# Use the random_upgrades array set earlier
 	var selected_upgrade = random_upgrades[button_index]
-	
-	# Debugging: Print the selected upgrade's name to confirm it's being applied correctly
-	print("Upgrade selected: ", selected_upgrade["name"])
-	
-	# Apply the selected upgrade
 	apply_upgrade(selected_upgrade)
-	
-	# Close the level-up screen and resume the game
 	get_tree().paused = false
 	%choose_skill.visible = false
 
 
 
 func apply_upgrade(upgrade):
-	print("Received upgrade: ", upgrade["name"])
-	
-	# Check if the current level is less than max level before upgrading
 	if upgrade["level"] < upgrade["max_level"]:
-		# Only apply the upgrade if it's below the max level
 		match upgrade["name"]:
 			"Sword Count":
 				increase_sword_count(upgrade)
@@ -223,8 +220,8 @@ func apply_upgrade(upgrade):
 				increase_rotation_speed(upgrade)
 			"Sword Damage":
 				increase_attack_damage(upgrade)
-			"Sword Range":
-				increase_sword_range(upgrade)
+			"Lifesteal":
+				increase_lifesteal(upgrade)
 			"Arrow Damage":
 				increase_arrow_damage(upgrade)
 			"Arrow Range":
@@ -251,12 +248,8 @@ func apply_upgrade(upgrade):
 				increase_movement_speed(upgrade)
 			"Max Health":
 				increase_max_hp(upgrade)
-	else:
-		# If upgrade is already at max level, print a message
-		print(upgrade["name"], "is already at max level.")
 
-
-func increase_sword_count(upgrade):
+func increase_sword_count(upgrade):#WORKS
 	var swordcount = 1
 	upgrade["level"] += 1
 	swordcount += 1
@@ -278,9 +271,10 @@ func increase_sword_count(upgrade):
 			%Bar4.visible = true
 		5:
 			%Bar5.visible = true
-	
-func increase_rotation_speed(upgrade):
+
+func increase_rotation_speed(upgrade):#WORKS
 	upgrade["level"] += 1
+	sword_rotation_speed += 25
 	%Upgrade2.visible = true
 	%Name2.text = upgrade["name"]
 	match upgrade["level"]:
@@ -297,11 +291,11 @@ func increase_rotation_speed(upgrade):
 		4:
 			%Bar9.visible = true
 		5:
-			%Bar10.visilbe = true
+			%Bar10.visible = true
 
-func increase_attack_damage(upgrade):
+func increase_attack_damage(upgrade):#WORKS
 	upgrade["level"] += 1
-	damage += 2.0  # Example: increasing damage
+	attackdamage *= 1.38
 	%Upgrade3.visible = true
 	%Name3.text = upgrade["name"]
 	match upgrade["level"]:
@@ -318,10 +312,11 @@ func increase_attack_damage(upgrade):
 		4:
 			%Bar14.visible = true
 		5:
-			%Bar15.visilbe = true
+			%Bar15.visible = true
 
-func increase_sword_range(upgrade):
+func increase_lifesteal(upgrade):#WORKS
 	upgrade["level"] += 1
+	lifesteal_scale += 0.1
 	%Upgrade4.visible = true
 	%Name4.text = upgrade["name"]
 	match upgrade["level"]:
@@ -338,7 +333,7 @@ func increase_sword_range(upgrade):
 		4:
 			%Bar19.visible = true
 		5:
-			%Bar20.visilbe = true
+			%Bar20.visible = true
 
 func increase_arrow_damage(upgrade):
 	upgrade["level"] += 1
@@ -358,7 +353,7 @@ func increase_arrow_damage(upgrade):
 		4:
 			%Bar4.visible = true
 		5:
-			%Bar5.visilbe = true
+			%Bar5.visible = true
 
 func increase_arrow_range(upgrade):
 	upgrade["level"] += 1
@@ -378,7 +373,7 @@ func increase_arrow_range(upgrade):
 		4:
 			%Bar9.visible = true
 		5:
-			%Bar10.visilbe = true
+			%Bar10.visible = true
 
 func increase_attack_speed(upgrade):
 	upgrade["level"] += 1
@@ -398,7 +393,7 @@ func increase_attack_speed(upgrade):
 		4:
 			%Bar14.visible = true
 		5:
-			%Bar15.visilbe = true
+			%Bar15.visible = true
 
 func increase_projectile_count(upgrade):
 	upgrade["level"] += 1
@@ -418,7 +413,7 @@ func increase_projectile_count(upgrade):
 		4:
 			%Bar19.visible = true
 		5:
-			%Bar20.visilbe = true
+			%Bar20.visible = true
 
 func increase_piercing_arrows(upgrade):
 	upgrade["level"] += 1
@@ -438,7 +433,7 @@ func increase_piercing_arrows(upgrade):
 		4:
 			%Bar24.visible = true
 		5:
-			%Bar25.visilbe = true
+			%Bar25.visible = true
 
 func increase_bouncing_arrows(upgrade):
 	upgrade["level"] += 1
@@ -458,7 +453,7 @@ func increase_bouncing_arrows(upgrade):
 		4:
 			%Bar29.visible = true
 		5:
-			%Bar30.visilbe = true
+			%Bar30.visible = true
 
 func increase_defense(upgrade):
 	upgrade["level"] += 1
@@ -478,7 +473,7 @@ func increase_defense(upgrade):
 		4:
 			%Bar4.visible = true
 		5:
-			%Bar5.visilbe = true
+			%Bar5.visible = true
 
 func increase_area_size(upgrade):
 	upgrade["level"] += 1
@@ -498,7 +493,7 @@ func increase_area_size(upgrade):
 		4:
 			%Bar9.visible = true
 		5:
-			%Bar10.visilbe = true
+			%Bar10.visible = true
 
 func increase_area_damage(upgrade):
 	upgrade["level"] += 1
@@ -518,7 +513,7 @@ func increase_area_damage(upgrade):
 		4:
 			%Bar14.visible = true
 		5:
-			%Bar15.visilbe = true
+			%Bar15.visible = true
 
 func increase_slow_area(upgrade):
 	upgrade["level"] += 1
@@ -538,7 +533,7 @@ func increase_slow_area(upgrade):
 		4:
 			%Bar19.visible = true
 		5:
-			%Bar20.visilbe = true
+			%Bar20.visible = true
 
 func increase_hp_regen(upgrade):
 	upgrade["level"] += 1
@@ -558,33 +553,37 @@ func increase_hp_regen(upgrade):
 		4:
 			%Bar24.visible = true
 		5:
-			%Bar25.visilbe = true
+			%Bar25.visible = true
 
-func increase_movement_speed(upgrade):
+func increase_movement_speed(upgrade):#WORKS
 	upgrade["level"] += 1
 	speed *= 1.1
 	print("Movement Speed upgraded to:", speed)
 	print("Movement Speed max level:", upgrade["max_level"])
 
-func increase_max_hp(upgrade):
+func increase_max_hp(upgrade):#WORKS
 	upgrade["level"] += 1
 	maxhealth *= 1.2
 	print("Max Health upgraded to:", maxhealth)
 	print("Max Health max level:", upgrade["max_level"])
 
-
-func resetswords(n):
+func resetswords(n):#WORKS
 	var newsword = SWORD.instantiate()
 	add_child(newsword)
+	swords.append(newsword)
 	newsword.global_position = %Swordspawn.global_position
 	match n:
 		1:
-			newsword.global_rotation = firstsword.global_rotation + 3.1*n
+			newsword.global_rotation = firstsword.global_rotation + 3.15
 		2:
-			newsword.global_rotation = firstsword.global_rotation + n
+			newsword.global_rotation = firstsword.global_rotation + 1.15
 		3:
-			newsword.global_rotation = firstsword.global_rotation + 2*n
+			newsword.global_rotation = firstsword.global_rotation - 2.15
 		4:
-			newsword.global_rotation = firstsword.global_rotation + 2*n
+			newsword.global_rotation = firstsword.global_rotation + 2.15
 		5:
-			newsword.global_rotation = firstsword.global_rotation + 2*n
+			newsword.global_rotation = firstsword.global_rotation - 1.15
+
+func lifesteal(n):#WORKS
+	health += n * lifesteal_scale
+	%HPBar.value = health

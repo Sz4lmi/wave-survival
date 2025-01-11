@@ -291,7 +291,6 @@ texture = ExtResource("3_segtf")
 region_rect = Rect2(0, 0, 20000, 20000)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
 autostart = true
 
 [node name="pawn_enemy" parent="Timer" instance=ExtResource("4_46i6r")]

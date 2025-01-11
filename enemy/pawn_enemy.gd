@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 150
-var health = 1
+var health = 5
 
 @onready var player = get_node("/root/world/Player")
 
@@ -10,11 +10,11 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * SPEED
 	move_and_slide()
 
-func gethit():
+func gethit(damage):
 	%AnimationPlayer.play("gethit")
 	%AnimationPlayer.queue("walk")
-	health -= 1
-	if health == 0:
+	health -= damage
+	if health <= 0:
 		queue_free()
 		const XP = preload("res://random_stuff/xporb.tscn")
 		var xp = XP.instantiate()

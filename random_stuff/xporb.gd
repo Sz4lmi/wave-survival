@@ -5,7 +5,7 @@ var speed = 0
 
 func _ready() -> void:
 	%AnimationPlayer.play("drop")
-
+	%AnimationPlayer.queue("pulse")
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * speed
