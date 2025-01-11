@@ -1,16 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpslyi1ia86tp"]
+[gd_scene load_steps=6 format=3 uid="uid://dpslyi1ia86tp"]
 
 [ext_resource type="PackedScene" uid="uid://b56r4uvqb57a2" path="res://player/player.tscn" id="1_r0odf"]
 [ext_resource type="Script" path="res://world/world.gd" id="1_uqikq"]
 [ext_resource type="Texture2D" uid="uid://bevb16kyb8q6f" path="res://assets/board.png" id="3_segtf"]
-[ext_resource type="PackedScene" uid="uid://soglipy5xqyy" path="res://enemy/pawn_enemy.tscn" id="4_46i6r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hh5x5"]
 size = Vector2(1876.25, 7772)
 
 [sub_resource type="Curve2D" id="Curve2D_ry3ra"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 30, -916, 0, 0, 0, 0, 740, -462, 0, 0, 0, 0, 780, 355, 0, 0, 0, 0, 17, 836, 0, 0, 0, 0, -782, 342, 0, 0, 0, 0, -773, -511, 0, 0, 0, 0, 30, -916)
+"points": PackedVector2Array(0, 0, 0, 0, 30, -916, 0, 0, 0, 0, 740, -462, 0, 0, 0, 0, 780, 355, 0, 0, 0, 0, -35.836, 995.207, 0, 0, 0, 0, -782, 342, 0, 0, 0, 0, -773, -511, 0, 0, 0, 0, 30, -916)
 }
 point_count = 7
 
@@ -292,10 +291,6 @@ region_rect = Rect2(0, 0, 20000, 20000)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
-
-[node name="pawn_enemy" parent="Timer" instance=ExtResource("4_46i6r")]
-y_sort_enabled = true
-position = Vector2(770.153, 174.409)
 
 [node name="UI" type="Node2D" parent="."]
 
