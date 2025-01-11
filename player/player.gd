@@ -127,7 +127,7 @@ func _physics_process(delta: float) -> void:
 		sword.damage = attackdamage
 
 func collectxp():
-	xp += randf_range(1.0, 6.9)
+	xp += randf_range(1.0, 7.5)
 	%XPBar.value = xp
 	if %XPBar.value == %XPBar.max_value:
 		levelup()
