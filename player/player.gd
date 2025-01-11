@@ -1,0 +1,590 @@
+extends CharacterBody2D
+
+var speed = 500
+var maxhealth = 100.0
+var health = 100.0
+var damage = 5.0
+var xp = 0
+var xp_to_level_up = 25
+var currentlevel = 1
+
+const SWORD = preload("res://player/sword.tscn")
+var firstsword = SWORD.instantiate()
+
+
+
+
+
+
+var selected_weapon = ""
+var current_weapon_upgrades = []
+var weapons = {
+	"sword": {
+		"name": "Sword",
+		"upgrades": [
+			{"name": "Sword Count", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Rotation Speed", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Sword Damage", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Sword Range", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+		]
+	},
+	"bow": {
+		"name": "Bow & Arrow",
+		"upgrades": [
+			{"name": "Arrow Damage", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Arrow Range", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Attack Speed", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Projectile Count", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Piercing Arrows", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Bouncing Arrows", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+		]
+	},
+	"shield": {
+		"name": "Shield",
+		"upgrades": [
+			{"name": "Defense", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Area", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Damage", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Ice Aura", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Health Regeneration", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+		]
+	}
+}
+
+signal ded
+func player():
+	pass
+
+func _ready() -> void:
+	get_tree().paused = true
+	%XPLabel.text = str(currentlevel)
+	%XPBar.max_value = xp_to_level_up
+	%choose_skill.visible = false
+	%choose_weapon.visible = true
+	%HP_XP.visible = true
+	%Weapon.visible = false
+	%Upgrade1.visible = false
+	%Upgrade2.visible = false
+	%Upgrade3.visible = false
+	%Upgrade4.visible = false
+	%Upgrade5.visible = false
+	%Upgrade6.visible = false
+
+func _on_weapon1_pressed():
+	selected_weapon = "sword"
+	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
+	add_child(firstsword)
+	firstsword.global_position = %Swordspawn.global_position
+	start_game()
+
+func _on_weapon2_pressed():
+	selected_weapon = "bow"
+	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
+	start_game()
+
+func _on_weapon3_pressed():
+	selected_weapon = "shield"
+	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
+	start_game()
+
+func start_game():
+	get_tree().paused = false
+	%choose_weapon.visible = false
+	%choose_skill.visible = false
+	%Weapon.visible = true
+	%Weapon.text = ("Weapon: " + weapons[selected_weapon]["name"])
+
+func _physics_process(delta: float) -> void:
+	var direction = Input.get_vector("left", "right", "up", "down")
+	velocity = direction * speed
+	move_and_slide()
+	if velocity.length() > 0.0:
+		%AnimationPlayer.play("walk")
+	else:
+		%AnimationPlayer.play("idle")
+	
+	var mobs = %hurtbox.get_overlapping_bodies()
+	if mobs.size() > 0:
+		health -= damage * mobs.size() * delta
+		%HPBar.value = health
+		%HPBar.max_value = maxhealth
+	if health <= 0.0:
+		ded.emit()
+
+func collectxp():
+	xp += randi_range(1, 5)
+	%XPBar.value = xp
+	if %XPBar.value == %XPBar.max_value:
+		levelup()
+
+func levelup():
+	xp = 0
+	xp_to_level_up = xp_to_level_up * 1.05
+	%XPBar.value = 0
+	%XPBar.max_value = xp_to_level_up
+	currentlevel += 1
+	%XPLabel.text = str(currentlevel)
+	show_level_up_screen()
+	health += ((maxhealth-health)/4.0)
+
+var random_upgrades = []
+func show_level_up_screen():
+	random_upgrades = get_random_upgrades()
+	
+	get_tree().paused = true
+	%choose_skill.visible = true
+	
+	# Assign upgrade names to buttons
+	if random_upgrades.size() > 0:
+		%button1.text = random_upgrades[0]["name"]
+	else:
+		%button1.text = ""
+
+	if random_upgrades.size() > 1:
+		%button2.text = random_upgrades[1]["name"]
+	else:
+		%button2.text = ""
+
+	if random_upgrades.size() > 2:
+		%button3.text = random_upgrades[2]["name"]
+	else:
+		%button3.text = ""
+
+	%button1.visible = random_upgrades.size() > 0
+	%button2.visible = random_upgrades.size() > 1
+	%button3.visible = random_upgrades.size() > 2
+
+
+func get_random_upgrades():
+	var valid_upgrades = current_weapon_upgrades.filter(func(upgrade):
+		return upgrade["level"] < upgrade["max_level"] and not upgrade["locked"]
+	)
+	valid_upgrades.shuffle()
+	return valid_upgrades.slice(0, 3)
+
+func handle_upgrade_selected(selected_upgrade_name: String):
+	for upgrade in current_weapon_upgrades:
+		if upgrade["name"] == selected_upgrade_name:
+			# Only increase level if it's below the max level
+			if upgrade["level"] < upgrade["max_level"]:
+				upgrade["level"] += 1
+				print(upgrade["name"], "upgraded to level:", upgrade["level"])
+				# Lock upgrade if it reaches max level
+				if upgrade["level"] >= upgrade["max_level"]:
+					upgrade["locked"] = true
+					print(selected_upgrade_name, "is now locked.")
+			else:
+				print(selected_upgrade_name, "is already at max level.")
+			break
+
+
+func _on_button_1_pressed() -> void:
+	button_pressed(0)
+
+func _on_button_2_pressed() -> void:
+	button_pressed(1)
+
+func _on_button_3_pressed() -> void:
+	button_pressed(2)
+
+
+func button_pressed(button_index):
+	# Use the random_upgrades array set earlier
+	var selected_upgrade = random_upgrades[button_index]
+	
+	# Debugging: Print the selected upgrade's name to confirm it's being applied correctly
+	print("Upgrade selected: ", selected_upgrade["name"])
+	
+	# Apply the selected upgrade
+	apply_upgrade(selected_upgrade)
+	
+	# Close the level-up screen and resume the game
+	get_tree().paused = false
+	%choose_skill.visible = false
+
+
+
+func apply_upgrade(upgrade):
+	print("Received upgrade: ", upgrade["name"])
+	
+	# Check if the current level is less than max level before upgrading
+	if upgrade["level"] < upgrade["max_level"]:
+		# Only apply the upgrade if it's below the max level
+		match upgrade["name"]:
+			"Sword Count":
+				increase_sword_count(upgrade)
+			"Rotation Speed":
+				increase_rotation_speed(upgrade)
+			"Sword Damage":
+				increase_attack_damage(upgrade)
+			"Sword Range":
+				increase_sword_range(upgrade)
+			"Arrow Damage":
+				increase_arrow_damage(upgrade)
+			"Arrow Range":
+				increase_arrow_range(upgrade)
+			"Attack Speed":
+				increase_attack_speed(upgrade)
+			"Projectile Count":
+				increase_projectile_count(upgrade)
+			"Piercing Arrows":
+				increase_piercing_arrows(upgrade)
+			"Bouncing Arrows":
+				increase_bouncing_arrows(upgrade)
+			"Defense":
+				increase_defense(upgrade)
+			"Area Size":
+				increase_area_size(upgrade)
+			"Area Damage":
+				increase_area_damage(upgrade)
+			"Slow Area":
+				increase_slow_area(upgrade)
+			"Health Regeneration":
+				increase_hp_regen(upgrade)
+			"Movement Speed":
+				increase_movement_speed(upgrade)
+			"Max Health":
+				increase_max_hp(upgrade)
+	else:
+		# If upgrade is already at max level, print a message
+		print(upgrade["name"], "is already at max level.")
+
+
+func increase_sword_count(upgrade):
+	var swordcount = 1
+	upgrade["level"] += 1
+	swordcount += 1
+	resetswords(upgrade["level"])
+	%Upgrade1.visible = true
+	%Name1.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar1.visible = true
+			%Bar2.visible = false
+			%Bar3.visible = false
+			%Bar4.visible = false
+			%Bar5.visible = false
+		2:
+			%Bar2.visible = true
+		3:
+			%Bar3.visible = true
+		4:
+			%Bar4.visible = true
+		5:
+			%Bar5.visible = true
+	
+func increase_rotation_speed(upgrade):
+	upgrade["level"] += 1
+	%Upgrade2.visible = true
+	%Name2.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar6.visible = true
+			%Bar7.visible = false
+			%Bar8.visible = false
+			%Bar9.visible = false
+			%Bar10.visible = false
+		2:
+			%Bar7.visible = true
+		3:
+			%Bar8.visible = true
+		4:
+			%Bar9.visible = true
+		5:
+			%Bar10.visilbe = true
+
+func increase_attack_damage(upgrade):
+	upgrade["level"] += 1
+	damage += 2.0  # Example: increasing damage
+	%Upgrade3.visible = true
+	%Name3.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar11.visible = true
+			%Bar12.visible = false
+			%Bar13.visible = false
+			%Bar14.visible = false
+			%Bar15.visible = false
+		2:
+			%Bar12.visible = true
+		3:
+			%Bar13.visible = true
+		4:
+			%Bar14.visible = true
+		5:
+			%Bar15.visilbe = true
+
+func increase_sword_range(upgrade):
+	upgrade["level"] += 1
+	%Upgrade4.visible = true
+	%Name4.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar16.visible = true
+			%Bar17.visible = false
+			%Bar18.visible = false
+			%Bar19.visible = false
+			%Bar20.visible = false
+		2:
+			%Bar17.visible = true
+		3:
+			%Bar18.visible = true
+		4:
+			%Bar19.visible = true
+		5:
+			%Bar20.visilbe = true
+
+func increase_arrow_damage(upgrade):
+	upgrade["level"] += 1
+	%Upgrade1.visible = true
+	%Name1.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar1.visible = true
+			%Bar2.visible = false
+			%Bar3.visible = false
+			%Bar4.visible = false
+			%Bar5.visible = false
+		2:
+			%Bar2.visible = true
+		3:
+			%Bar3.visible = true
+		4:
+			%Bar4.visible = true
+		5:
+			%Bar5.visilbe = true
+
+func increase_arrow_range(upgrade):
+	upgrade["level"] += 1
+	%Upgrade2.visible = true
+	%Name2.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar6.visible = true
+			%Bar7.visible = false
+			%Bar8.visible = false
+			%Bar9.visible = false
+			%Bar10.visible = false
+		2:
+			%Bar7.visible = true
+		3:
+			%Bar8.visible = true
+		4:
+			%Bar9.visible = true
+		5:
+			%Bar10.visilbe = true
+
+func increase_attack_speed(upgrade):
+	upgrade["level"] += 1
+	%Upgrade3.visible = true
+	%Name3.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar11.visible = true
+			%Bar12.visible = false
+			%Bar13.visible = false
+			%Bar14.visible = false
+			%Bar15.visible = false
+		2:
+			%Bar12.visible = true
+		3:
+			%Bar13.visible = true
+		4:
+			%Bar14.visible = true
+		5:
+			%Bar15.visilbe = true
+
+func increase_projectile_count(upgrade):
+	upgrade["level"] += 1
+	%Upgrade4.visible = true
+	%Name4.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar16.visible = true
+			%Bar17.visible = false
+			%Bar18.visible = false
+			%Bar19.visible = false
+			%Bar20.visible = false
+		2:
+			%Bar17.visible = true
+		3:
+			%Bar18.visible = true
+		4:
+			%Bar19.visible = true
+		5:
+			%Bar20.visilbe = true
+
+func increase_piercing_arrows(upgrade):
+	upgrade["level"] += 1
+	%Upgrade5.visible = true
+	%Name5.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar21.visible = true
+			%Bar22.visible = false
+			%Bar23.visible = false
+			%Bar24.visible = false
+			%Bar25.visible = false
+		2:
+			%Bar22.visible = true
+		3:
+			%Bar23.visible = true
+		4:
+			%Bar24.visible = true
+		5:
+			%Bar25.visilbe = true
+
+func increase_bouncing_arrows(upgrade):
+	upgrade["level"] += 1
+	%Upgrade6.visible = true
+	%Name6.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar26.visible = true
+			%Bar27.visible = false
+			%Bar28.visible = false
+			%Bar29.visible = false
+			%Bar30.visible = false
+		2:
+			%Bar27.visible = true
+		3:
+			%Bar28.visible = true
+		4:
+			%Bar29.visible = true
+		5:
+			%Bar30.visilbe = true
+
+func increase_defense(upgrade):
+	upgrade["level"] += 1
+	%Upgrade1.visible = true
+	%Name1.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar1.visible = true
+			%Bar2.visible = false
+			%Bar3.visible = false
+			%Bar4.visible = false
+			%Bar5.visible = false
+		2:
+			%Bar2.visible = true
+		3:
+			%Bar3.visible = true
+		4:
+			%Bar4.visible = true
+		5:
+			%Bar5.visilbe = true
+
+func increase_area_size(upgrade):
+	upgrade["level"] += 1
+	%Upgrade2.visible = true
+	%Name2.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar6.visible = true
+			%Bar7.visible = false
+			%Bar8.visible = false
+			%Bar9.visible = false
+			%Bar10.visible = false
+		2:
+			%Bar7.visible = true
+		3:
+			%Bar8.visible = true
+		4:
+			%Bar9.visible = true
+		5:
+			%Bar10.visilbe = true
+
+func increase_area_damage(upgrade):
+	upgrade["level"] += 1
+	%Upgrade3.visible = true
+	%Name3.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar11.visible = true
+			%Bar12.visible = false
+			%Bar13.visible = false
+			%Bar14.visible = false
+			%Bar15.visible = false
+		2:
+			%Bar12.visible = true
+		3:
+			%Bar13.visible = true
+		4:
+			%Bar14.visible = true
+		5:
+			%Bar15.visilbe = true
+
+func increase_slow_area(upgrade):
+	upgrade["level"] += 1
+	%Upgrade4.visible = true
+	%Name4.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar16.visible = true
+			%Bar17.visible = false
+			%Bar18.visible = false
+			%Bar19.visible = false
+			%Bar20.visible = false
+		2:
+			%Bar17.visible = true
+		3:
+			%Bar18.visible = true
+		4:
+			%Bar19.visible = true
+		5:
+			%Bar20.visilbe = true
+
+func increase_hp_regen(upgrade):
+	upgrade["level"] += 1
+	%Upgrade5.visible = true
+	%Name5.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar21.visible = true
+			%Bar22.visible = false
+			%Bar23.visible = false
+			%Bar24.visible = false
+			%Bar25.visible = false
+		2:
+			%Bar22.visible = true
+		3:
+			%Bar23.visible = true
+		4:
+			%Bar24.visible = true
+		5:
+			%Bar25.visilbe = true
+
+func increase_movement_speed(upgrade):
+	upgrade["level"] += 1
+	speed *= 1.1
+	print("Movement Speed upgraded to:", speed)
+	print("Movement Speed max level:", upgrade["max_level"])
+
+func increase_max_hp(upgrade):
+	upgrade["level"] += 1
+	maxhealth *= 1.2
+	print("Max Health upgraded to:", maxhealth)
+	print("Max Health max level:", upgrade["max_level"])
+
+
+func resetswords(n):
+	var newsword = SWORD.instantiate()
+	add_child(newsword)
+	newsword.global_position = %Swordspawn.global_position
+	match n:
+		1:
+			newsword.global_rotation = firstsword.global_rotation + 3.1*n
+		2:
+			newsword.global_rotation = firstsword.global_rotation + n
+		3:
+			newsword.global_rotation = firstsword.global_rotation + 2*n
+		4:
+			newsword.global_rotation = firstsword.global_rotation + 2*n
+		5:
+			newsword.global_rotation = firstsword.global_rotation + 2*n

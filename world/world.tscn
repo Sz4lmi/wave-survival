@@ -1,0 +1,362 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpslyi1ia86tp"]
+
+[ext_resource type="PackedScene" uid="uid://b56r4uvqb57a2" path="res://player/player.tscn" id="1_r0odf"]
+[ext_resource type="Script" path="res://world/world.gd" id="1_uqikq"]
+[ext_resource type="Texture2D" uid="uid://bevb16kyb8q6f" path="res://assets/board.png" id="3_segtf"]
+[ext_resource type="PackedScene" uid="uid://soglipy5xqyy" path="res://enemy/pawn_enemy.tscn" id="4_46i6r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hh5x5"]
+size = Vector2(1876.25, 7772)
+
+[sub_resource type="Curve2D" id="Curve2D_ry3ra"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 30, -916, 0, 0, 0, 0, 740, -462, 0, 0, 0, 0, 780, 355, 0, 0, 0, 0, 17, 836, 0, 0, 0, 0, -782, 342, 0, 0, 0, 0, -773, -511, 0, 0, 0, 0, 30, -916)
+}
+point_count = 7
+
+[node name="world" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_uqikq")
+
+[node name="Map" type="Node2D" parent="."]
+position = Vector2(-2500, -2500)
+
+[node name="ColorRect" type="ColorRect" parent="Map"]
+z_index = -30
+offset_right = 5000.0
+offset_bottom = 5000.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Map/ColorRect"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 500.0
+offset_right = 450.0
+offset_bottom = 4500.0
+theme_override_constants/separation = 430
+alignment = 1
+
+[node name="Label1" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label7" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label8" type="Label" parent="Map/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Map/ColorRect"]
+layout_mode = 0
+offset_left = 4550.0
+offset_top = 500.0
+offset_right = 4700.0
+offset_bottom = 4500.0
+theme_override_constants/separation = 430
+alignment = 1
+
+[node name="Label1" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label7" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label8" type="Label" parent="Map/ColorRect/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Map/ColorRect"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 300.0
+offset_right = 4500.0
+offset_bottom = 450.0
+theme_override_constants/separation = 480
+alignment = 1
+
+[node name="Label1" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "A"
+
+[node name="Label2" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "B"
+
+[node name="Label3" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "C"
+
+[node name="Label4" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "D"
+
+[node name="Label5" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "E"
+
+[node name="Label6" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "F"
+
+[node name="Label7" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "G"
+
+[node name="Label8" type="Label" parent="Map/ColorRect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "H"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Map/ColorRect"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 4550.0
+offset_right = 4500.0
+offset_bottom = 4700.0
+theme_override_constants/separation = 480
+alignment = 1
+
+[node name="Label1" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "A"
+
+[node name="Label2" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "B"
+
+[node name="Label3" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "C"
+
+[node name="Label4" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "D"
+
+[node name="Label5" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "E"
+
+[node name="Label6" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "F"
+
+[node name="Label7" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "G"
+
+[node name="Label8" type="Label" parent="Map/ColorRect/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "H"
+
+[node name="map end" type="StaticBody2D" parent="Map"]
+z_index = -30
+position = Vector2(2500, 2500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/map end"]
+position = Vector2(-2953.13, 0)
+shape = SubResource("RectangleShape2D_hh5x5")
+debug_color = Color(0.926166, 3.98523e-05, 0.673452, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Map/map end"]
+position = Vector2(2946, 7)
+shape = SubResource("RectangleShape2D_hh5x5")
+debug_color = Color(0.926166, 3.98523e-05, 0.673452, 0.42)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Map/map end"]
+position = Vector2(0, 2952)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_hh5x5")
+debug_color = Color(0.926166, 3.98523e-05, 0.673452, 0.42)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Map/map end"]
+position = Vector2(-2, -2946)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_hh5x5")
+debug_color = Color(0.926166, 3.98523e-05, 0.673452, 0.42)
+
+[node name="board" type="Sprite2D" parent="Map"]
+z_index = -30
+z_as_relative = false
+texture_repeat = 2
+position = Vector2(2500, 2500)
+scale = Vector2(2, 2)
+texture = ExtResource("3_segtf")
+region_rect = Rect2(0, 0, 20000, 20000)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="pawn_enemy" parent="Timer" instance=ExtResource("4_46i6r")]
+y_sort_enabled = true
+position = Vector2(770.153, 174.409)
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="game over" type="CanvasLayer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UI/game over"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.678431, 0, 0, 0.14902)
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/game over"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -51.5
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/game over/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Label" type="Label" parent="UI/game over/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/game over/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="retry" type="Button" parent="UI/game over/CenterContainer/VBoxContainer2/VBoxContainer"]
+process_mode = 2
+layout_mode = 2
+text = "Try Again"
+
+[node name="exit" type="Button" parent="UI/game over/CenterContainer/VBoxContainer2/VBoxContainer"]
+process_mode = 2
+layout_mode = 2
+text = "Exit Game"
+
+[node name="Player" parent="." instance=ExtResource("1_r0odf")]
+position = Vector2(-287.164, 133.793)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+curve = SubResource("Curve2D_ry3ra")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(30, -916)
+rotation = 0.568913
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UI/game over/CenterContainer/VBoxContainer2/VBoxContainer/retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="UI/game over/CenterContainer/VBoxContainer2/VBoxContainer/exit" to="." method="_on_exit_pressed"]
+[connection signal="ded" from="Player" to="." method="_on_player_ded"]

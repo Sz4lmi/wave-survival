@@ -1,0 +1,792 @@
+[gd_scene load_steps=26 format=3 uid="uid://b56r4uvqb57a2"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_mu5gq"]
+[ext_resource type="Texture2D" uid="uid://co27neyfip1hh" path="res://assets/chess-bishop-white.png" id="2_2kg5k"]
+[ext_resource type="Texture2D" uid="uid://cll5mtmr5wyup" path="res://assets/chess-king-white.png" id="3_b7246"]
+[ext_resource type="Texture2D" uid="uid://cwjdtdohso1so" path="res://assets/chess-knight-white.png" id="4_8121l"]
+[ext_resource type="Texture2D" uid="uid://b60pyjuaoh8l3" path="res://assets/chess-pawn-white.png" id="5_bchsp"]
+[ext_resource type="Texture2D" uid="uid://c7pwoe4pwrr3" path="res://assets/chess-pawn-white-2-hand.png" id="5_v53xo"]
+[ext_resource type="Texture2D" uid="uid://dlcn1ipmg3yan" path="res://assets/chess-queen-white.png" id="6_5refg"]
+[ext_resource type="Texture2D" uid="uid://lo15kdepnata" path="res://assets/chess-rook-white.png" id="7_umecr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnie1"]
+atlas = ExtResource("2_2kg5k")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssiq5"]
+atlas = ExtResource("3_b7246")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2hur"]
+atlas = ExtResource("4_8121l")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ytkw"]
+atlas = ExtResource("5_bchsp")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6h5pb"]
+atlas = ExtResource("5_v53xo")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_247lg"]
+atlas = ExtResource("6_5refg")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptqee"]
+atlas = ExtResource("7_umecr")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n8h4b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnie1")
+}],
+"loop": true,
+"name": &"bishop",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssiq5")
+}],
+"loop": true,
+"name": &"king",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2hur")
+}],
+"loop": true,
+"name": &"kinght",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ytkw")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6h5pb")
+}],
+"loop": false,
+"name": &"pawn",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_247lg")
+}],
+"loop": true,
+"name": &"queen",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptqee")
+}],
+"loop": true,
+"name": &"rook",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_edfc0"]
+radius = 35.0
+
+[sub_resource type="Animation" id="Animation_3yaga"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -70)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_uywo0"]
+resource_name = "idle"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -70)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_swkwp"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -70), Vector2(0, -100), Vector2(0, -70), Vector2(0, -100), Vector2(0, -70), Vector2(0, -100), Vector2(0, -70)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.266667, 0.733333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.174533, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ijgmc"]
+_data = {
+"RESET": SubResource("Animation_3yaga"),
+"idle": SubResource("Animation_uywo0"),
+"walk": SubResource("Animation_swkwp")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1q5u0"]
+bg_color = Color(0.416754, 8.48304e-07, 2.16588e-07, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rc26"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtqdl"]
+bg_color = Color(0, 0.206351, 0.445546, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pid8y"]
+bg_color = Color(0.386961, 0.647306, 0.999988, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Player" type="CharacterBody2D"]
+platform_floor_layers = 4294967040
+safe_margin = 3.0
+script = ExtResource("1_mu5gq")
+
+[node name="Swordspawn" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -70)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(0, -70)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_n8h4b")
+animation = &"pawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -19)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_edfc0")
+
+[node name="hurtbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.662944, 0.662944)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(-2.50111e-12, -30)
+rotation = 1.5708
+scale = Vector2(1.89659, 1.89659)
+shape = SubResource("CircleShape2D_edfc0")
+debug_color = Color(0.919321, 0, 0, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ijgmc")
+}
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="ui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="HP_XP" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 200
+
+[node name="HP" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/HP_XP"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="ui/MarginContainer/VBoxContainer/HP_XP/HP"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "Player name"
+
+[node name="HPBar" type="ProgressBar" parent="ui/MarginContainer/VBoxContainer/HP_XP/HP"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_1q5u0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2rc26")
+value = 100.0
+show_percentage = false
+
+[node name="XP" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/HP_XP"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/HP_XP/XP"]
+layout_mode = 2
+
+[node name="Level" type="Label" parent="ui/MarginContainer/VBoxContainer/HP_XP/XP/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 1, 1)
+theme_override_constants/outline_size = 1
+text = "LVL"
+
+[node name="XPLabel" type="Label" parent="ui/MarginContainer/VBoxContainer/HP_XP/XP/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 2
+
+[node name="XPBar" type="ProgressBar" parent="ui/MarginContainer/VBoxContainer/HP_XP/XP"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_xtqdl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pid8y")
+max_value = 50.0
+fill_mode = 1
+
+[node name="Upgrades" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 35
+
+[node name="Weapon" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4547, 0.00185092, 0.698667, 1)
+theme_override_constants/outline_size = 1
+text = "Chosen weapon"
+horizontal_alignment = 2
+
+[node name="Upgrade1" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name1" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar1" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar2" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar3" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar4" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar5" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade1/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Upgrade2" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name2" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar6" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar7" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar8" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar9" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar10" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Upgrade3" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name3" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar11" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar12" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar13" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar14" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar15" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade3/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Upgrade4" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name4" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar16" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar17" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar18" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar19" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar20" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Upgrade5" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name5" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar21" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar22" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar23" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar24" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar25" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade5/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Upgrade6" type="VBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Name6" type="Label" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Upgrade name"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Bar26" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar27" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar28" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar29" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="Bar30" type="ColorRect" parent="ui/MarginContainer/VBoxContainer/Upgrades/Upgrade6/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 8)
+layout_mode = 2
+color = Color(0.454902, 0, 0.698039, 1)
+
+[node name="choose_skill" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="choose_skill"]
+modulate = Color(0.47788, 0.47788, 0.47788, 0.317647)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="choose_skill"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choose_skill/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label2" type="Label" parent="choose_skill/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "You've levelled up"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="choose_skill/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Choose one new skill:"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choose_skill/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="button1" type="Button" parent="choose_skill/CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "ms"
+
+[node name="button2" type="Button" parent="choose_skill/CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "sw sp"
+
+[node name="button3" type="Button" parent="choose_skill/CenterContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "sw co"
+
+[node name="choose_weapon" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="choose_weapon"]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.586567, 0.216823, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="choose_weapon"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="choose_weapon/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choose_weapon/MarginContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 150
+
+[node name="CenterContainer" type="CenterContainer" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Choose your starting weapon
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="weapon1" type="Button" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "sword"
+
+[node name="weapon2" type="Button" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "bow"
+
+[node name="weapon3" type="Button" parent="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "shield"
+
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="pressed" from="choose_skill/CenterContainer/VBoxContainer/HBoxContainer/button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="choose_skill/CenterContainer/VBoxContainer/HBoxContainer/button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="choose_skill/CenterContainer/VBoxContainer/HBoxContainer/button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/weapon1" to="." method="_on_weapon1_pressed"]
+[connection signal="pressed" from="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/weapon2" to="." method="_on_weapon2_pressed"]
+[connection signal="pressed" from="choose_weapon/MarginContainer/CenterContainer/VBoxContainer/HBoxContainer/weapon3" to="." method="_on_weapon3_pressed"]

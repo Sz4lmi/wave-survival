@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3whnesysv6l4"]
+
+[ext_resource type="Texture2D" uid="uid://v8iejc5h3ysu" path="res://assets/white-circle-free-png.webp" id="1_08xgo"]
+[ext_resource type="Script" path="res://random_stuff/xporb.gd" id="1_dhflr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y6jo5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wrhqc"]
+radius = 117.107
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kxtg7"]
+
+[sub_resource type="Animation" id="Animation_kdsak"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7hdbm"]
+resource_name = "drop"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.266667, 0.5, 0.566667, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -60), Vector2(0, 0), Vector2(0, -30), Vector2(0, 0), Vector2(0, -15), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u13ve"]
+_data = {
+"RESET": SubResource("Animation_kdsak"),
+"drop": SubResource("Animation_7hdbm")
+}
+
+[node name="XP_orb" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_dhflr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("1_08xgo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 1.00605)
+shape = SubResource("CircleShape2D_y6jo5")
+debug_color = Color(0.630653, 0, 0.0642944, 0.42)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wrhqc")
+
+[node name="Pickup" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
+shape = SubResource("CircleShape2D_kxtg7")
+debug_color = Color(0, 0, 0, 0.42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_u13ve")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Pickup" to="." method="_on_pickup_body_entered"]
