@@ -5,6 +5,13 @@ var health = 5
 
 @onready var player = get_node("/root/world/Player")
 
+func enemy():
+	pass
+
+func _ready() -> void:
+	%flame.visible = false
+	%poison.visible = false
+
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * SPEED
@@ -25,5 +32,26 @@ func gethit(damage):
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
 
-func enemy():
-	pass
+func setonfire(n):
+	%flame.visible = true
+	%fire_duration.start(n)
+	%fire_dot.start(1)
+
+func getpoisoned(n):
+	%poison.visible = true
+	%poison_duration.start(n)
+	%poison_dot.start(2)
+
+func _on_fire_duration_timeout() -> void:
+	%flame.visible = false
+	%fire_dot.stop()
+
+func _on_fire_dot_timeout() -> void:
+	gethit(0.5)
+
+func _on_poison_duration_timeout() -> void:
+	%poison.visible = false
+	%poison_dot.stop()
+
+func _on_poison_dot_timeout() -> void:
+	gethit(0.2)

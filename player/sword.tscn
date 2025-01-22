@@ -1,10 +1,70 @@
-[gd_scene load_steps=4 format=3 uid="uid://swi6txi0vgdi"]
+[gd_scene load_steps=14 format=3 uid="uid://swi6txi0vgdi"]
 
 [ext_resource type="Texture2D" uid="uid://cb28s1faqbiee" path="res://assets/sword.png" id="1_4bh63"]
 [ext_resource type="Script" path="res://player/sword.gd" id="1_ryq3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d02v4"]
 size = Vector2(56, 359)
+
+[sub_resource type="Gradient" id="Gradient_biebc"]
+offsets = PackedFloat32Array(0, 0.523166, 1)
+colors = PackedColorArray(1, 0.34902, 0, 1, 0.904094, 0.215509, 3.85046e-07, 1, 0.870588, 0, 0.054902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h1uma"]
+gradient = SubResource("Gradient_biebc")
+
+[sub_resource type="Curve" id="Curve_8vhpt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2bpaf"]
+curve = SubResource("Curve_8vhpt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxavc"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -50, 0)
+linear_accel_min = 55.11
+linear_accel_max = 55.11
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_2bpaf")
+color_ramp = SubResource("GradientTexture1D_h1uma")
+turbulence_enabled = true
+turbulence_noise_strength = 9.03
+turbulence_noise_scale = 1.054
+turbulence_noise_speed_random = 3.0
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 50.0
+
+[sub_resource type="Gradient" id="Gradient_sj84p"]
+offsets = PackedFloat32Array(0, 0.523166, 1)
+colors = PackedColorArray(0, 0.620083, 0.223649, 1, 0.0806339, 0.445716, 0, 1, 0.100842, 0.294502, 0.204539, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y26g4"]
+gradient = SubResource("Gradient_sj84p")
+
+[sub_resource type="Curve" id="Curve_c5j34"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_62ik4"]
+curve = SubResource("Curve_c5j34")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kyvnw"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -50, 0)
+linear_accel_min = 55.11
+linear_accel_max = 55.11
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_62ik4")
+color_ramp = SubResource("GradientTexture1D_y26g4")
+turbulence_enabled = true
+turbulence_noise_strength = 4.41
+turbulence_noise_scale = 0.738
+turbulence_noise_speed_random = 3.0
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 50.0
 
 [node name="sword" type="Node2D"]
 position = Vector2(0, -70)
@@ -28,5 +88,17 @@ position = Vector2(-120.5, -2)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_d02v4")
 debug_color = Color(0, 0.532236, 0.983688, 0.42)
+
+[node name="flame" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(274, -18)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_cxavc")
+
+[node name="poison" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(274, -18)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_kyvnw")
 
 [connection signal="body_entered" from="pivot/sword/Area2D" to="." method="_on_area_2d_body_entered"]
