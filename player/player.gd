@@ -16,8 +16,9 @@ var sword_rotation_speed = 150
 var swords = []
 var attackdamage = 1
 var lifesteal_scale = 0.0
-
-
+var swordcount = 0
+var onfire = false
+var poisoned = false
 
 
 var selected_weapon = ""
@@ -30,6 +31,8 @@ var weapons = {
 			{"name": "Rotation Speed", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Sword Damage", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Lifesteal", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Flame Sword", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Poison Sword", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
 		]
@@ -42,7 +45,7 @@ var weapons = {
 			{"name": "Attack Speed", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Projectile Count", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Piercing Arrows", "level": 0, "max_level": 5, "locked": false},
-			{"name": "Bouncing Arrows", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Flaming Arrows", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
 		]
@@ -54,6 +57,7 @@ var weapons = {
 			{"name": "Area", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Damage", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Ice Aura", "level": 0, "max_level": 5, "locked": false},
+			{"name": "Fire Aura", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Health Regeneration", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
@@ -83,9 +87,8 @@ func _ready() -> void:
 func _on_weapon1_pressed():
 	selected_weapon = "sword"
 	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
-	add_child(firstsword)
-	swords.append(firstsword)
-	firstsword.global_position = %Swordspawn.global_position
+	swordcount += 1
+	resetswords(swordcount)
 	start_game()
 
 func _on_weapon2_pressed():
@@ -127,7 +130,7 @@ func _physics_process(delta: float) -> void:
 		sword.damage = attackdamage
 
 func collectxp():
-	xp += randf_range(1.0, 7.5)
+	xp += randf_range(4.2, 6.9)
 	%XPBar.value = xp
 	if %XPBar.value == %XPBar.max_value:
 		levelup()
@@ -222,6 +225,10 @@ func apply_upgrade(upgrade):
 				increase_attack_damage(upgrade)
 			"Lifesteal":
 				increase_lifesteal(upgrade)
+			"Flame Sword":
+				increase_flame(upgrade)
+			"Poison Sword":
+				increase_poison(upgrade)
 			"Arrow Damage":
 				increase_arrow_damage(upgrade)
 			"Arrow Range":
@@ -232,8 +239,8 @@ func apply_upgrade(upgrade):
 				increase_projectile_count(upgrade)
 			"Piercing Arrows":
 				increase_piercing_arrows(upgrade)
-			"Bouncing Arrows":
-				increase_bouncing_arrows(upgrade)
+			"Flaming Arrows":
+				increase_flaming_arrows(upgrade)
 			"Defense":
 				increase_defense(upgrade)
 			"Area Size":
@@ -249,11 +256,12 @@ func apply_upgrade(upgrade):
 			"Max Health":
 				increase_max_hp(upgrade)
 
-func increase_sword_count(upgrade):#WORKS
-	var swordcount = 1
+
+#SWORD
+func increase_sword_count(upgrade):#WORKS 
 	upgrade["level"] += 1
 	swordcount += 1
-	resetswords(upgrade["level"])
+	resetswords(swordcount)
 	%Upgrade1.visible = true
 	%Name1.text = upgrade["name"]
 	match upgrade["level"]:
@@ -335,6 +343,53 @@ func increase_lifesteal(upgrade):#WORKS
 		5:
 			%Bar20.visible = true
 
+func increase_flame(upgrade): #WORKS
+	upgrade["level"] += 1
+	onfire = true
+	for sword in swords:
+		sword.addflame()
+	%Upgrade5.visible = true
+	%Name5.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar21.visible = true
+			%Bar22.visible = false
+			%Bar23.visible = false
+			%Bar24.visible = false
+			%Bar25.visible = false
+		2:
+			%Bar22.visible = true
+		3:
+			%Bar23.visible = true
+		4:
+			%Bar24.visible = true
+		5:
+			%Bar25.visible = true
+
+func increase_poison(upgrade): #WORKS
+	upgrade["level"] += 1
+	poisoned = true
+	for sword in swords:
+		sword.addpoison()
+	%Upgrade6.visible = true
+	%Name6.text = upgrade["name"]
+	match upgrade["level"]:
+		1:
+			%Bar26.visible = true
+			%Bar27.visible = false
+			%Bar28.visible = false
+			%Bar29.visible = false
+			%Bar30.visible = false
+		2:
+			%Bar27.visible = true
+		3:
+			%Bar28.visible = true
+		4:
+			%Bar29.visible = true
+		5:
+			%Bar30.visible = true
+
+#BOWANDARROW
 func increase_arrow_damage(upgrade):
 	upgrade["level"] += 1
 	%Upgrade1.visible = true
@@ -435,7 +490,7 @@ func increase_piercing_arrows(upgrade):
 		5:
 			%Bar25.visible = true
 
-func increase_bouncing_arrows(upgrade):
+func increase_flaming_arrows(upgrade):
 	upgrade["level"] += 1
 	%Upgrade6.visible = true
 	%Name6.text = upgrade["name"]
@@ -455,6 +510,7 @@ func increase_bouncing_arrows(upgrade):
 		5:
 			%Bar30.visible = true
 
+#SHIELD
 func increase_defense(upgrade):
 	upgrade["level"] += 1
 	%Upgrade1.visible = true
@@ -555,6 +611,7 @@ func increase_hp_regen(upgrade):
 		5:
 			%Bar25.visible = true
 
+#UNIVERSAL
 func increase_movement_speed(upgrade):#WORKS
 	upgrade["level"] += 1
 	speed *= 1.1
@@ -567,22 +624,24 @@ func increase_max_hp(upgrade):#WORKS
 	print("Max Health upgraded to:", maxhealth)
 	print("Max Health max level:", upgrade["max_level"])
 
+
+#extras
 func resetswords(n):#WORKS
 	var newsword = SWORD.instantiate()
 	add_child(newsword)
 	swords.append(newsword)
 	newsword.global_position = %Swordspawn.global_position
-	match n:
-		1:
-			newsword.global_rotation = firstsword.global_rotation + 3.15
-		2:
-			newsword.global_rotation = firstsword.global_rotation + 1.15
-		3:
-			newsword.global_rotation = firstsword.global_rotation - 2.15
-		4:
-			newsword.global_rotation = firstsword.global_rotation + 2.15
-		5:
-			newsword.global_rotation = firstsword.global_rotation - 1.15
+	
+	if n > 1:
+		for i in range(swordcount):
+			var angle = 360.0/swordcount * i
+			swords[i].set_rotation_degrees(angle)
+	if onfire == true:
+		for sword in swords:
+			sword.addflame()
+	if poisoned == true:
+		for sword in swords:
+			sword.addpoison()
 
 func lifesteal(n):#WORKS
 	health += n * lifesteal_scale

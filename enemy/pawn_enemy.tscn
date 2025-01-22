@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://soglipy5xqyy"]
+[gd_scene load_steps=20 format=3 uid="uid://soglipy5xqyy"]
 
 [ext_resource type="Script" path="res://enemy/pawn_enemy.gd" id="1_uhrry"]
 [ext_resource type="Texture2D" uid="uid://b7cn3y3ra13v2" path="res://assets/chess-pawn-black.png" id="2_l8xr2"]
@@ -112,6 +112,66 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_iyqm7"]
 radius = 38.0
 
+[sub_resource type="Gradient" id="Gradient_qpwgr"]
+offsets = PackedFloat32Array(0, 0.523166, 1)
+colors = PackedColorArray(1, 0.34902, 0, 1, 0.904094, 0.215509, 3.85046e-07, 1, 0.870588, 0, 0.054902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jgjnd"]
+gradient = SubResource("Gradient_qpwgr")
+
+[sub_resource type="Curve" id="Curve_8248e"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2wdo0"]
+curve = SubResource("Curve_8248e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lpw53"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -50, 0)
+linear_accel_min = 55.11
+linear_accel_max = 55.11
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_2wdo0")
+color_ramp = SubResource("GradientTexture1D_jgjnd")
+turbulence_enabled = true
+turbulence_noise_strength = 9.13
+turbulence_noise_scale = 3.171
+turbulence_noise_speed_random = 3.0
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 50.0
+
+[sub_resource type="Gradient" id="Gradient_uthfu"]
+offsets = PackedFloat32Array(0, 0.523166, 1)
+colors = PackedColorArray(0, 0.620083, 0.223649, 1, 0.0806339, 0.445716, 0, 1, 0.100842, 0.294502, 0.204539, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ebofk"]
+gradient = SubResource("Gradient_uthfu")
+
+[sub_resource type="Curve" id="Curve_i1tml"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dsdai"]
+curve = SubResource("Curve_i1tml")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0bd1k"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -50, 0)
+linear_accel_min = 55.11
+linear_accel_max = 55.11
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_dsdai")
+color_ramp = SubResource("GradientTexture1D_ebofk")
+turbulence_enabled = true
+turbulence_noise_strength = 7.0
+turbulence_noise_scale = 0.2
+turbulence_noise_speed_random = 3.0
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 50.0
+
 [node name="pawn_enemy" type="CharacterBody2D"]
 texture_filter = 1
 collision_layer = 2
@@ -139,3 +199,36 @@ animation = &"idle"
 position = Vector2(0, -38)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_iyqm7")
+
+[node name="flame" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -40)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_lpw53")
+
+[node name="poison" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -40)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_0bd1k")
+
+[node name="fire_dot" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="fire_duration" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="poison_dot" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="poison_duration" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="fire_dot" to="." method="_on_fire_dot_timeout"]
+[connection signal="timeout" from="fire_duration" to="." method="_on_fire_duration_timeout"]
+[connection signal="timeout" from="poison_dot" to="." method="_on_poison_dot_timeout"]
+[connection signal="timeout" from="poison_duration" to="." method="_on_poison_duration_timeout"]
