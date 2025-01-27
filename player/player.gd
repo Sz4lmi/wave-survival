@@ -34,7 +34,8 @@ var weapons = {
 			{"name": "Flame Sword", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Poison Sword", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
-			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Colelction Radius", "level": 0, "max_level": 10, "locked": false}
 		]
 	},
 	"bow": {
@@ -47,7 +48,8 @@ var weapons = {
 			{"name": "Piercing Arrows", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Flaming Arrows", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
-			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Colelction Radius", "level": 0, "max_level": 10, "locked": false}
 		]
 	},
 	"shield": {
@@ -60,7 +62,8 @@ var weapons = {
 			{"name": "Fire Aura", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Health Regeneration", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
-			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false}
+			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false},
+			{"name": "Collection Radius", "level": 0, "max_level": 10, "locked": false}
 		]
 	}
 }
@@ -186,11 +189,9 @@ func handle_upgrade_selected(selected_upgrade_name: String):
 			# Only increase level if it's below the max level
 			if upgrade["level"] < upgrade["max_level"]:
 				upgrade["level"] += 1
-				print(upgrade["name"], "upgraded to level:", upgrade["level"])
 				# Lock upgrade if it reaches max level
 				if upgrade["level"] >= upgrade["max_level"]:
 					upgrade["locked"] = true
-					print(selected_upgrade_name, "is now locked.")
 			else:
 				print(selected_upgrade_name, "is already at max level.")
 			break
@@ -255,6 +256,8 @@ func apply_upgrade(upgrade):
 				increase_movement_speed(upgrade)
 			"Max Health":
 				increase_max_hp(upgrade)
+			"Collection Radius":
+				increase_coll_rad(upgrade)
 
 
 #SWORD
@@ -624,6 +627,8 @@ func increase_max_hp(upgrade):#WORKS
 	print("Max Health upgraded to:", maxhealth)
 	print("Max Health max level:", upgrade["max_level"])
 
+func increase_coll_rad(upgrade):
+	print("radius increased")
 
 #extras
 func resetswords(n):#WORKS
