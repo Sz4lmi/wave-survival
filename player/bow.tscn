@@ -1,23 +1,59 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2numyi6wiv3v"]
+[gd_scene load_steps=10 format=3 uid="uid://c2numyi6wiv3v"]
 
-[ext_resource type="Texture2D" uid="uid://cb28s1faqbiee" path="res://assets/sword.png" id="1_5cok2"]
 [ext_resource type="Script" path="res://player/bow.gd" id="1_6e0fu"]
+[ext_resource type="Texture2D" uid="uid://6qmh61r7p5pk" path="res://assets/2.png" id="3_3eqod"]
+[ext_resource type="Texture2D" uid="uid://bwf7fequ3su1q" path="res://assets/3.png" id="3_a2n25"]
+[ext_resource type="Texture2D" uid="uid://d33hp8bxihei" path="res://assets/4.png" id="4_u41fc"]
+[ext_resource type="Texture2D" uid="uid://bilrwwm5mgrws" path="res://assets/5.png" id="5_j7mxq"]
+[ext_resource type="Texture2D" uid="uid://bywv5wb5s41x5" path="res://assets/6.png" id="6_i4dsk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_umvoy"]
-radius = 721.11
+radius = 535.019
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_octrb"]
-atlas = ExtResource("1_5cok2")
-region = Rect2(0, 0, 208, 208)
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7jrd"]
+atlas = ExtResource("3_3eqod")
+region = Rect2(0, 0, 200, 200)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_muyjg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_octrb")
+"texture": SubResource("AtlasTexture_g7jrd")
 }],
 "loop": true,
-"name": &"default",
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_a2n25")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_u41fc")
+}],
+"loop": true,
+"name": &"3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_j7mxq")
+}],
+"loop": true,
+"name": &"5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_i4dsk")
+}],
+"loop": true,
+"name": &"7",
 "speed": 5.0
 }]
 
@@ -35,14 +71,15 @@ shape = SubResource("CircleShape2D_umvoy")
 unique_name_in_owner = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="pivot"]
+unique_name_in_owner = true
 position = Vector2(113, -2.38419e-07)
-rotation = 1.56289
-scale = Vector2(0.521275, 0.521275)
+scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_muyjg")
+animation = &"1"
 
 [node name="arrow_spawn" type="Marker2D" parent="pivot/AnimatedSprite2D"]
 unique_name_in_owner = true
-position = Vector2(0.197091, -24.9381)
+position = Vector2(49.8777, -1.91838)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.5
