@@ -114,8 +114,8 @@ _data = {
 }
 
 [node name="XP_orb" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_dhflr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -130,11 +130,15 @@ shape = SubResource("CircleShape2D_y6jo5")
 debug_color = Color(0.630653, 0, 0.0642944, 0.42)
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_wrhqc")
 
 [node name="Pickup" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup"]
 shape = SubResource("CircleShape2D_kxtg7")

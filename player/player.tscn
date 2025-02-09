@@ -242,6 +242,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 platform_floor_layers = 4294967040
 safe_margin = 3.0
 script = ExtResource("1_mu5gq")
@@ -267,7 +268,7 @@ shape = SubResource("CircleShape2D_edfc0")
 unique_name_in_owner = true
 scale = Vector2(0.662944, 0.662944)
 collision_layer = 0
-collision_mask = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2(-2.50111e-12, -30)

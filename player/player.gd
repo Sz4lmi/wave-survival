@@ -7,19 +7,25 @@ var damage = 5.0
 var xp = 0
 var xp_to_level_up = 25
 var currentlevel = 1
+var attackdamage = 1
 
-
-#KARD
+#SWORD
 const SWORD = preload("res://player/sword.tscn")
 var firstsword = SWORD.instantiate()
 var sword_rotation_speed = 150
 var swords = []
-var attackdamage = 1
 var lifesteal_scale = 0.0
 var swordcount = 0
 var onfire = false
 var poisoned = false
 
+#BOW AND ARROW
+const BOW = preload("res://player/bow.tscn")
+var attackspeed = 1
+var arrowcount = 1
+var attackrange = 1
+var bows = []
+var arrowrange = 1200
 
 var selected_weapon = ""
 var current_weapon_upgrades = []
@@ -35,7 +41,7 @@ var weapons = {
 			{"name": "Poison Sword", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false},
-			{"name": "Colelction Radius", "level": 0, "max_level": 10, "locked": false}
+			{"name": "Collection Radius", "level": 0, "max_level": 10, "locked": false}
 		]
 	},
 	"bow": {
@@ -49,7 +55,7 @@ var weapons = {
 			{"name": "Flaming Arrows", "level": 0, "max_level": 5, "locked": false},
 			{"name": "Movement Speed", "level": 0, "max_level": 10, "locked": false},
 			{"name": "Max Health", "level": 0, "max_level": 10, "locked": false},
-			{"name": "Colelction Radius", "level": 0, "max_level": 10, "locked": false}
+			{"name": "Collection Radius", "level": 0, "max_level": 10, "locked": false}
 		]
 	},
 	"shield": {
@@ -97,6 +103,7 @@ func _on_weapon1_pressed():
 func _on_weapon2_pressed():
 	selected_weapon = "bow"
 	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
+	resetbow()
 	start_game()
 
 func _on_weapon3_pressed():
@@ -115,6 +122,10 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("left", "right", "up", "down")
 	velocity = direction * speed
 	move_and_slide()
+	
+	%HPBar.value = health
+	%HPBar.max_value = maxhealth
+	
 	if velocity.length() > 0.0:
 		%AnimationPlayer.play("walk")
 	else:
@@ -123,8 +134,6 @@ func _physics_process(delta: float) -> void:
 	var mobs = %hurtbox.get_overlapping_bodies()
 	if mobs.size() > 0:
 		health -= damage * mobs.size() * delta
-		%HPBar.value = health
-		%HPBar.max_value = maxhealth
 	if health <= 0.0:
 		ded.emit()
 	
@@ -415,6 +424,7 @@ func increase_arrow_damage(upgrade):
 
 func increase_arrow_range(upgrade):
 	upgrade["level"] += 1
+	arrowrange = arrowrange * 1.08
 	%Upgrade2.visible = true
 	%Name2.text = upgrade["name"]
 	match upgrade["level"]:
@@ -618,14 +628,10 @@ func increase_hp_regen(upgrade):
 func increase_movement_speed(upgrade):#WORKS
 	upgrade["level"] += 1
 	speed *= 1.1
-	print("Movement Speed upgraded to:", speed)
-	print("Movement Speed max level:", upgrade["max_level"])
 
 func increase_max_hp(upgrade):#WORKS
 	upgrade["level"] += 1
 	maxhealth *= 1.2
-	print("Max Health upgraded to:", maxhealth)
-	print("Max Health max level:", upgrade["max_level"])
 
 func increase_coll_rad(upgrade):
 	print("radius increased")
@@ -650,4 +656,8 @@ func resetswords(n):#WORKS
 
 func lifesteal(n):#WORKS
 	health += n * lifesteal_scale
-	%HPBar.value = health
+
+func resetbow():#WORKS
+	var bow = BOW.instantiate()
+	add_child(bow)
+	bows.append(bow)

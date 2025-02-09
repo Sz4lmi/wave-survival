@@ -30,8 +30,8 @@ scale_max = 5.0
 scale_curve = SubResource("CurveTexture_2bpaf")
 color_ramp = SubResource("GradientTexture1D_h1uma")
 turbulence_enabled = true
-turbulence_noise_strength = 9.03
-turbulence_noise_scale = 1.054
+turbulence_noise_strength = 8.61
+turbulence_noise_scale = 10.145
 turbulence_noise_speed_random = 3.0
 turbulence_initial_displacement_min = -100.0
 turbulence_initial_displacement_max = 50.0
@@ -80,7 +80,8 @@ texture = ExtResource("1_4bh63")
 
 [node name="Area2D" type="Area2D" parent="pivot/sword"]
 position = Vector2(37.8531, -7.99897)
-collision_mask = 2
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/sword/Area2D"]
 unique_name_in_owner = true
