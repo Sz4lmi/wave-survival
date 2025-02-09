@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 150
 var health = 5
+var maxhealth = 5
 
 @onready var player = get_node("/root/world/Player")
 
@@ -11,11 +12,19 @@ func enemy():
 func _ready() -> void:
 	%flame.visible = false
 	%poison.visible = false
+	%HPBar.visible = false
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * SPEED
 	move_and_slide()
+	%HPBar.value = health
+	%HPBar.max_value = maxhealth
+	if health < maxhealth:
+		%HPBar.visible = true
+	else:
+		%HPBar.visible = false
+	
 
 func gethit(damage):
 	%AnimationPlayer.play("gethit")

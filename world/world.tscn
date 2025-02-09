@@ -257,6 +257,7 @@ text = "H"
 [node name="map end" type="StaticBody2D" parent="Map"]
 z_index = -30
 position = Vector2(2500, 2500)
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/map end"]
 position = Vector2(-2953.13, 0)

@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2numyi6wiv3v"]
+
+[ext_resource type="Texture2D" uid="uid://cb28s1faqbiee" path="res://assets/sword.png" id="1_5cok2"]
+[ext_resource type="Script" path="res://player/bow.gd" id="1_6e0fu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_umvoy"]
+radius = 6.59037e+07
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_octrb"]
+atlas = ExtResource("1_5cok2")
+region = Rect2(0, 0, 208, 208)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_muyjg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_octrb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="bow" type="Area2D"]
+position = Vector2(0, -40)
+rotation = 1.5708
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_6e0fu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("CircleShape2D_umvoy")
+
+[node name="pivot" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="pivot"]
+position = Vector2(113, -2.38419e-07)
+rotation = 1.56289
+scale = Vector2(0.521275, 0.521275)
+sprite_frames = SubResource("SpriteFrames_muyjg")
+
+[node name="arrow_spawn" type="Marker2D" parent="pivot/AnimatedSprite2D"]
+unique_name_in_owner = true
+position = Vector2(0.197091, -24.9381)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

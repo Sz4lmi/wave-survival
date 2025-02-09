@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://soglipy5xqyy"]
+[gd_scene load_steps=22 format=3 uid="uid://soglipy5xqyy"]
 
 [ext_resource type="Script" path="res://enemy/pawn_enemy.gd" id="1_uhrry"]
 [ext_resource type="Texture2D" uid="uid://b7cn3y3ra13v2" path="res://assets/chess-pawn-black.png" id="2_l8xr2"]
@@ -136,8 +136,8 @@ scale_max = 5.0
 scale_curve = SubResource("CurveTexture_2wdo0")
 color_ramp = SubResource("GradientTexture1D_jgjnd")
 turbulence_enabled = true
-turbulence_noise_strength = 9.13
-turbulence_noise_scale = 3.171
+turbulence_noise_strength = 4.75
+turbulence_noise_scale = 10.0
 turbulence_noise_speed_random = 3.0
 turbulence_initial_displacement_min = -100.0
 turbulence_initial_displacement_max = 50.0
@@ -172,10 +172,24 @@ turbulence_noise_speed_random = 3.0
 turbulence_initial_displacement_min = -100.0
 turbulence_initial_displacement_max = 50.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hw02d"]
+bg_color = Color(0.416754, 8.48304e-07, 2.16588e-07, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulfmp"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="pawn_enemy" type="CharacterBody2D"]
 texture_filter = 1
-collision_layer = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 5
 platform_floor_layers = 4294967040
 script = ExtResource("1_uhrry")
 
@@ -227,6 +241,19 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
+
+[node name="HPBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 15)
+offset_left = -50.0
+offset_top = -161.0
+offset_right = 50.0
+offset_bottom = -146.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hw02d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ulfmp")
+max_value = 5.0
+value = 5.0
+show_percentage = false
 
 [connection signal="timeout" from="fire_dot" to="." method="_on_fire_dot_timeout"]
 [connection signal="timeout" from="fire_duration" to="." method="_on_fire_duration_timeout"]
