@@ -515,6 +515,9 @@ func increase_piercing_arrows(upgrade):#TODO
 
 func increase_flaming_arrows(upgrade):#TODO
 	upgrade["level"] += 1
+	for bow in bows:
+		bow.onfire = true
+		bow.firelevel += 1
 	%Upgrade6.visible = true
 	%Name6.text = upgrade["name"]
 	match upgrade["level"]:
