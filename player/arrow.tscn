@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://v65oxiw55nib" path="res://assets/arrow.png" id="2_a6awh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3m0m"]
-radius = 13.0
-height = 106.0
+radius = 8.0
+height = 54.0
 
 [node name="Arrow" type="Area2D"]
 top_level = true

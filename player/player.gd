@@ -401,6 +401,7 @@ func increase_poison(upgrade): #WORKS
 		5:
 			%Bar30.visible = true
 
+
 #BOWANDARROW
 func increase_arrow_damage(upgrade):
 	upgrade["level"] += 1
@@ -422,9 +423,10 @@ func increase_arrow_damage(upgrade):
 		5:
 			%Bar5.visible = true
 
-func increase_arrow_range(upgrade):
+func increase_arrow_range(upgrade):#WORKS
 	upgrade["level"] += 1
-	arrowrange = arrowrange * 1.08
+	for bow in bows:
+		bow.increase_range()
 	%Upgrade2.visible = true
 	%Name2.text = upgrade["name"]
 	match upgrade["level"]:
@@ -443,8 +445,11 @@ func increase_arrow_range(upgrade):
 		5:
 			%Bar10.visible = true
 
-func increase_attack_speed(upgrade):
+func increase_attack_speed(upgrade):#WORKS
 	upgrade["level"] += 1
+	attackspeed += 1
+	var timer = get_node("/root/world/Player/bow/Timer")
+	timer.wait_time -= 0.1
 	%Upgrade3.visible = true
 	%Name3.text = upgrade["name"]
 	match upgrade["level"]:
@@ -465,6 +470,8 @@ func increase_attack_speed(upgrade):
 
 func increase_projectile_count(upgrade):
 	upgrade["level"] += 1
+	for bow in bows:
+		bow.projectile_count += 1
 	%Upgrade4.visible = true
 	%Name4.text = upgrade["name"]
 	match upgrade["level"]:
