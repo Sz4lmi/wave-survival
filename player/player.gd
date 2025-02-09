@@ -401,8 +401,9 @@ func increase_poison(upgrade): #WORKS
 		5:
 			%Bar30.visible = true
 
+
 #BOWANDARROW
-func increase_arrow_damage(upgrade):
+func increase_arrow_damage(upgrade):#TODO
 	upgrade["level"] += 1
 	%Upgrade1.visible = true
 	%Name1.text = upgrade["name"]
@@ -422,9 +423,10 @@ func increase_arrow_damage(upgrade):
 		5:
 			%Bar5.visible = true
 
-func increase_arrow_range(upgrade):
+func increase_arrow_range(upgrade):#WORKS
 	upgrade["level"] += 1
-	arrowrange = arrowrange * 1.08
+	for bow in bows:
+		bow.increase_range()
 	%Upgrade2.visible = true
 	%Name2.text = upgrade["name"]
 	match upgrade["level"]:
@@ -443,8 +445,11 @@ func increase_arrow_range(upgrade):
 		5:
 			%Bar10.visible = true
 
-func increase_attack_speed(upgrade):
+func increase_attack_speed(upgrade):#WORKS
 	upgrade["level"] += 1
+	attackspeed += 1
+	var timer = get_node("/root/world/Player/bow/Timer")
+	timer.wait_time -= 0.1
 	%Upgrade3.visible = true
 	%Name3.text = upgrade["name"]
 	match upgrade["level"]:
@@ -463,8 +468,11 @@ func increase_attack_speed(upgrade):
 		5:
 			%Bar15.visible = true
 
-func increase_projectile_count(upgrade):
+func increase_projectile_count(upgrade):#WORKS
 	upgrade["level"] += 1
+	for bow in bows:
+		bow.projectile_count_level += 1
+		bow.upgrade_shooting()
 	%Upgrade4.visible = true
 	%Name4.text = upgrade["name"]
 	match upgrade["level"]:
@@ -483,8 +491,10 @@ func increase_projectile_count(upgrade):
 		5:
 			%Bar20.visible = true
 
-func increase_piercing_arrows(upgrade):
+func increase_piercing_arrows(upgrade):#TODO
 	upgrade["level"] += 1
+	for bow in bows:
+		bow.piercing = true
 	%Upgrade5.visible = true
 	%Name5.text = upgrade["name"]
 	match upgrade["level"]:
@@ -503,7 +513,7 @@ func increase_piercing_arrows(upgrade):
 		5:
 			%Bar25.visible = true
 
-func increase_flaming_arrows(upgrade):
+func increase_flaming_arrows(upgrade):#TODO
 	upgrade["level"] += 1
 	%Upgrade6.visible = true
 	%Name6.text = upgrade["name"]
@@ -564,7 +574,7 @@ func increase_area_size(upgrade):
 		5:
 			%Bar10.visible = true
 
-func increase_area_damage(upgrade):
+func increase_area_damage(upgrade):#ROYAL AURA
 	upgrade["level"] += 1
 	%Upgrade3.visible = true
 	%Name3.text = upgrade["name"]
@@ -584,7 +594,7 @@ func increase_area_damage(upgrade):
 		5:
 			%Bar15.visible = true
 
-func increase_slow_area(upgrade):
+func increase_slow_area(upgrade):#FROZEN FIELD
 	upgrade["level"] += 1
 	%Upgrade4.visible = true
 	%Name4.text = upgrade["name"]

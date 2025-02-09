@@ -1,11 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://urlw5ilpwq3k"]
+[gd_scene load_steps=9 format=3 uid="uid://urlw5ilpwq3k"]
 
 [ext_resource type="Script" path="res://player/arrow.gd" id="1_tpty2"]
 [ext_resource type="Texture2D" uid="uid://v65oxiw55nib" path="res://assets/arrow.png" id="2_a6awh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b3m0m"]
-radius = 13.0
-height = 106.0
+radius = 8.0
+height = 54.0
+
+[sub_resource type="Gradient" id="Gradient_jhgns"]
+offsets = PackedFloat32Array(0, 0.523166, 1)
+colors = PackedColorArray(1, 0.34902, 0, 1, 0.904094, 0.215509, 3.85046e-07, 1, 0.870588, 0, 0.054902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h1uma"]
+gradient = SubResource("Gradient_jhgns")
+
+[sub_resource type="Curve" id="Curve_6yjai"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2bpaf"]
+curve = SubResource("Curve_6yjai")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bqusv"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -150, 0)
+linear_accel_min = 55.11
+linear_accel_max = 55.11
+scale_min = 3.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_2bpaf")
+color_ramp = SubResource("GradientTexture1D_h1uma")
+turbulence_enabled = true
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 3.482
+turbulence_noise_speed_random = 3.0
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 50.0
 
 [node name="Arrow" type="Area2D"]
 top_level = true
@@ -20,5 +50,11 @@ texture = ExtResource("2_a6awh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_b3m0m")
+
+[node name="flame" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(18, -1)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_bqusv")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
