@@ -22,7 +22,7 @@ animations = [{
 }]
 
 [node name="bow" type="Area2D"]
-position = Vector2(0, -40)
+position = Vector2(0, -60)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_6e0fu")
