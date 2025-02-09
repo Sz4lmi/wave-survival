@@ -449,7 +449,7 @@ func increase_attack_speed(upgrade):#WORKS
 	upgrade["level"] += 1
 	attackspeed += 1
 	var timer = get_node("/root/world/Player/bow/Timer")
-	timer.wait_time -= 0.1
+	timer.wait_time -= 0.2
 	%Upgrade3.visible = true
 	%Name3.text = upgrade["name"]
 	match upgrade["level"]:

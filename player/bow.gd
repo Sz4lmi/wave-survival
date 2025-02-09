@@ -8,11 +8,25 @@ var piercing = false
 var onfire = false
 var firelevel = 0
 
+
 func _physics_process(delta: float) -> void:
 	var enemies_in_range = get_overlapping_bodies()
 	if enemies_in_range.size() > 0:
 		var target_enemy = enemies_in_range.front()
 		look_at(target_enemy.global_position)
+	match arrow_count:
+		1:
+			%AnimatedSprite2D.play("1")
+		2:
+			%AnimatedSprite2D.play("2")
+		3:
+			%AnimatedSprite2D.play("3")
+		5:
+			%AnimatedSprite2D.play("5")
+		7:
+			%AnimatedSprite2D.play("7")
+		9:
+			%AnimatedSprite2D.play("7")
 
 
 func shoot():
@@ -42,4 +56,4 @@ func upgrade_shooting():
 		4:
 			arrow_count = 7
 		5:
-			arrow_count = 10
+			arrow_count = 9
