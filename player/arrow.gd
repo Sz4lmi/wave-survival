@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("gethit"):
 		body.gethit(damage)
-		if body.has_method("setonfire"):
+		if onfire == true:
 			body.setonfire(3)
 		if piercing == false:
 			queue_free()

@@ -6,6 +6,7 @@ var spread_angle = 15
 var arrow_count = 1
 var piercing = false
 var onfire = false
+var firelevel = 0
 
 func _physics_process(delta: float) -> void:
 	var enemies_in_range = get_overlapping_bodies()
