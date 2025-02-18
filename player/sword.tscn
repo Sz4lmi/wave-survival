@@ -1,10 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://swi6txi0vgdi"]
 
-[ext_resource type="Texture2D" uid="uid://cb28s1faqbiee" path="res://assets/sword.png" id="1_4bh63"]
 [ext_resource type="Script" path="res://player/sword.gd" id="1_ryq3o"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_17ij7"]
+load_path = "res://.godot/imported/sword.png-728cc4321bfac1635e0d7ecb7d10b755.ctex"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d02v4"]
-size = Vector2(56, 359)
+size = Vector2(72, 358)
 
 [sub_resource type="Gradient" id="Gradient_biebc"]
 offsets = PackedFloat32Array(0, 0.523166, 1)
@@ -75,30 +77,35 @@ script = ExtResource("1_ryq3o")
 
 [node name="sword" type="Sprite2D" parent="pivot"]
 y_sort_enabled = true
-position = Vector2(262.147, 7.99896)
-texture = ExtResource("1_4bh63")
+position = Vector2(400, 0)
+rotation = 1.57168
+texture = SubResource("CompressedTexture2D_17ij7")
 
 [node name="Area2D" type="Area2D" parent="pivot/sword"]
-position = Vector2(37.8531, -7.99897)
+position = Vector2(-0.0936737, -106)
+rotation = -1.57168
+scale = Vector2(1, 1)
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/sword/Area2D"]
 unique_name_in_owner = true
-position = Vector2(-120.5, -2)
+position = Vector2(-121, -2.00064)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_d02v4")
 debug_color = Color(0, 0.532236, 0.983688, 0.42)
 
-[node name="flame" type="GPUParticles2D" parent="."]
+[node name="flame" type="GPUParticles2D" parent="pivot"]
 unique_name_in_owner = true
-position = Vector2(274, -18)
+position = Vector2(274.383, -10.6771)
+rotation = 0.0267056
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_cxavc")
 
-[node name="poison" type="GPUParticles2D" parent="."]
+[node name="poison" type="GPUParticles2D" parent="pivot"]
 unique_name_in_owner = true
-position = Vector2(274, -18)
+position = Vector2(274.383, -10.6771)
+rotation = 0.0267056
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_kyvnw")
 
