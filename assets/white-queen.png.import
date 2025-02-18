@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpty371q5don4"
-path="res://.godot/imported/sword.png-95f2475a1c94b517c0dc8c8a23b270ed.ctex"
+uid="uid://ce1tgpbps5mci"
+path="res://.godot/imported/white-queen.png-af4822bfe820eededb82117a64c2f97c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sword.png"
-dest_files=["res://.godot/imported/sword.png-95f2475a1c94b517c0dc8c8a23b270ed.ctex"]
+source_file="res://assets/white-queen.png"
+dest_files=["res://.godot/imported/white-queen.png-af4822bfe820eededb82117a64c2f97c.ctex"]
 
 [params]
 

@@ -1,40 +1,42 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2numyi6wiv3v"]
+[gd_scene load_steps=9 format=3 uid="uid://c2numyi6wiv3v"]
 
 [ext_resource type="Script" path="res://player/bow.gd" id="1_6e0fu"]
-[ext_resource type="Texture2D" uid="uid://6qmh61r7p5pk" path="res://assets/2.png" id="3_3eqod"]
-[ext_resource type="Texture2D" uid="uid://bwf7fequ3su1q" path="res://assets/3.png" id="3_a2n25"]
-[ext_resource type="Texture2D" uid="uid://d33hp8bxihei" path="res://assets/4.png" id="4_u41fc"]
-[ext_resource type="Texture2D" uid="uid://bilrwwm5mgrws" path="res://assets/5.png" id="5_j7mxq"]
-[ext_resource type="Texture2D" uid="uid://bywv5wb5s41x5" path="res://assets/6.png" id="6_i4dsk"]
+[ext_resource type="Texture2D" uid="uid://be86l5qf4n68" path="res://assets/bow-1arrow.png" id="2_2046x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_umvoy"]
 radius = 535.019
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7jrd"]
-atlas = ExtResource("3_3eqod")
-region = Rect2(0, 0, 200, 200)
+[sub_resource type="AtlasTexture" id="AtlasTexture_hryve"]
+atlas = ExtResource("2_2046x")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fohc5"]
+load_path = "res://.godot/imported/4.png-59f90d2603212c6302285cebb176551d.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qruvk"]
+load_path = "res://.godot/imported/5.png-ef89e8a87c573b8d59cc7406fcdd24b6.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_13lvu"]
+load_path = "res://.godot/imported/6.png-f9d63503950ce758a4468d886d9cbedc.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_muyjg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g7jrd")
+"texture": SubResource("AtlasTexture_hryve")
 }],
 "loop": true,
 "name": &"1",
 "speed": 5.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_a2n25")
-}],
+"frames": [],
 "loop": true,
 "name": &"2",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_u41fc")
+"texture": SubResource("CompressedTexture2D_fohc5")
 }],
 "loop": true,
 "name": &"3",
@@ -42,7 +44,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_j7mxq")
+"texture": SubResource("CompressedTexture2D_qruvk")
 }],
 "loop": true,
 "name": &"5",
@@ -50,7 +52,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_i4dsk")
+"texture": SubResource("CompressedTexture2D_13lvu")
 }],
 "loop": true,
 "name": &"7",
@@ -73,7 +75,7 @@ unique_name_in_owner = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="pivot"]
 unique_name_in_owner = true
 position = Vector2(113, -2.38419e-07)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_muyjg")
 animation = &"1"
 

@@ -1,79 +1,71 @@
 [gd_scene load_steps=26 format=3 uid="uid://b56r4uvqb57a2"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_mu5gq"]
-[ext_resource type="Texture2D" uid="uid://co27neyfip1hh" path="res://assets/chess-bishop-white.png" id="2_2kg5k"]
-[ext_resource type="Texture2D" uid="uid://cll5mtmr5wyup" path="res://assets/chess-king-white.png" id="3_b7246"]
-[ext_resource type="Texture2D" uid="uid://cwjdtdohso1so" path="res://assets/chess-knight-white.png" id="4_8121l"]
-[ext_resource type="Texture2D" uid="uid://b60pyjuaoh8l3" path="res://assets/chess-pawn-white.png" id="5_bchsp"]
-[ext_resource type="Texture2D" uid="uid://c7pwoe4pwrr3" path="res://assets/chess-pawn-white-2-hand.png" id="5_v53xo"]
-[ext_resource type="Texture2D" uid="uid://dlcn1ipmg3yan" path="res://assets/chess-queen-white.png" id="6_5refg"]
-[ext_resource type="Texture2D" uid="uid://lo15kdepnata" path="res://assets/chess-rook-white.png" id="7_umecr"]
+[ext_resource type="Texture2D" uid="uid://do8in2nji6oqw" path="res://assets/white-bishop.png" id="2_7ryj0"]
+[ext_resource type="Texture2D" uid="uid://dhdnhgoutkqr8" path="res://assets/white-king.png" id="3_mdkgs"]
+[ext_resource type="Texture2D" uid="uid://cp8weqnd3m6ki" path="res://assets/white-honse.png" id="4_vffb4"]
+[ext_resource type="Texture2D" uid="uid://b35sd3ukrgick" path="res://assets/white-pawn.png" id="5_mglol"]
+[ext_resource type="Texture2D" uid="uid://ckphk5g4tg0pu" path="res://assets/pawn-shield.png" id="6_g6vpb"]
+[ext_resource type="Texture2D" uid="uid://ce1tgpbps5mci" path="res://assets/white-queen.png" id="7_38hyb"]
+[ext_resource type="Texture2D" uid="uid://do1su4r23iovg" path="res://assets/white-rook.png" id="8_fb40l"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tnie1"]
-atlas = ExtResource("2_2kg5k")
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5fe1"]
+atlas = ExtResource("2_7ryj0")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ssiq5"]
-atlas = ExtResource("3_b7246")
+[sub_resource type="AtlasTexture" id="AtlasTexture_au3fv"]
+atlas = ExtResource("3_mdkgs")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w2hur"]
-atlas = ExtResource("4_8121l")
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7mk0"]
+atlas = ExtResource("4_vffb4")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ytkw"]
-atlas = ExtResource("5_bchsp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7o0p"]
+atlas = ExtResource("5_mglol")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6h5pb"]
-atlas = ExtResource("5_v53xo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4oxnl"]
+atlas = ExtResource("6_g6vpb")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_247lg"]
-atlas = ExtResource("6_5refg")
+[sub_resource type="AtlasTexture" id="AtlasTexture_aywrc"]
+atlas = ExtResource("7_38hyb")
 region = Rect2(0, 0, 500, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ptqee"]
-atlas = ExtResource("7_umecr")
+[sub_resource type="AtlasTexture" id="AtlasTexture_d41y4"]
+atlas = ExtResource("8_fb40l")
 region = Rect2(0, 0, 500, 500)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_n8h4b"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tnie1")
+"texture": SubResource("AtlasTexture_r5fe1")
 }],
-"loop": true,
+"loop": false,
 "name": &"bishop",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ssiq5")
+"texture": SubResource("AtlasTexture_au3fv")
 }],
-"loop": true,
+"loop": false,
 "name": &"king",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w2hur")
+"texture": SubResource("AtlasTexture_p7mk0")
 }],
-"loop": true,
-"name": &"kinght",
+"loop": false,
+"name": &"knight",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2ytkw")
-}],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6h5pb")
+"texture": SubResource("AtlasTexture_d7o0p")
 }],
 "loop": false,
 "name": &"pawn",
@@ -81,17 +73,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_247lg")
+"texture": SubResource("AtlasTexture_4oxnl")
 }],
-"loop": true,
+"loop": false,
+"name": &"pawn_with_shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aywrc")
+}],
+"loop": false,
 "name": &"queen",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ptqee")
+"texture": SubResource("AtlasTexture_d41y4")
 }],
-"loop": true,
+"loop": false,
 "name": &"rook",
 "speed": 5.0
 }]
@@ -116,22 +116,10 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/1/path = NodePath("AnimatedSprite2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -144,35 +132,23 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(-0.0333333),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false, true, false]
+"values": [Vector2(0, -110)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/path = NodePath("AnimatedSprite2D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -70)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(-0.0333333),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
@@ -191,7 +167,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -70), Vector2(0, -100), Vector2(0, -70), Vector2(0, -100), Vector2(0, -70), Vector2(0, -100), Vector2(0, -70)]
+"values": [Vector2(0, -110), Vector2(0, -140), Vector2(0, -110), Vector2(0, -140), Vector2(0, -110), Vector2(0, -140), Vector2(0, -110)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -253,7 +229,6 @@ position = Vector2(0, -70)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-texture_filter = 1
 position = Vector2(0, -70)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_n8h4b")

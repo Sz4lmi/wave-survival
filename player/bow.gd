@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 	var enemies_in_range = get_overlapping_bodies()
 	if enemies_in_range.size() > 0:
 		var target_enemy = enemies_in_range.front()
-		look_at(target_enemy.global_position)
+		look_at(target_enemy.global_position - Vector2(0, 70))
 	match arrow_count:
 		1:
 			%AnimatedSprite2D.play("1")

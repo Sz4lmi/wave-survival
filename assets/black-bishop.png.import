@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpty371q5don4"
-path="res://.godot/imported/sword.png-95f2475a1c94b517c0dc8c8a23b270ed.ctex"
+uid="uid://21bk3paga723"
+path="res://.godot/imported/black-bishop.png-934af13bcef083f66904c9656208fc00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sword.png"
-dest_files=["res://.godot/imported/sword.png-95f2475a1c94b517c0dc8c8a23b270ed.ctex"]
+source_file="res://assets/black-bishop.png"
+dest_files=["res://.godot/imported/black-bishop.png-934af13bcef083f66904c9656208fc00.ctex"]
 
 [params]
 
