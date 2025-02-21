@@ -9,11 +9,12 @@ size = Vector2(1876.25, 7772)
 
 [sub_resource type="Curve2D" id="Curve2D_ry3ra"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 30, -916, 0, 0, 0, 0, 740, -462, 0, 0, 0, 0, 780, 355, 0, 0, 0, 0, -35.836, 995.207, 0, 0, 0, 0, -782, 342, 0, 0, 0, 0, -773, -511, 0, 0, 0, 0, 30, -916)
+"points": PackedVector2Array(0, 0, 0, 0, 214.164, -1586.79, 0, 0, 0, 0, 1042.16, -1058.79, 0, 0, 0, 0, 1026.16, 997.207, 0, 0, 0, 0, -65.836, 1697.21, 0, 0, 0, 0, -1001.84, 1073.21, 0, 0, 0, 0, -925.836, -1074.79, 0, 0, 0, 0, -189.836, -1618.79, 0, 0, 0, 0, 206.164, -1594.79)
 }
-point_count = 7
+point_count = 8
 
 [node name="world" type="Node2D"]
+process_mode = 3
 y_sort_enabled = true
 script = ExtResource("1_uqikq")
 
@@ -340,16 +341,46 @@ process_mode = 2
 layout_mode = 2
 text = "Exit Game"
 
+[node name="paused" type="CanvasLayer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UI/paused"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.254902, 0.254902, 0.254902, 0.521569)
+
+[node name="Label" type="Label" parent="UI/paused"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -11.5
+offset_right = 28.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 50
+text = "Paused"
+
 [node name="Player" parent="." instance=ExtResource("1_r0odf")]
-position = Vector2(-287.164, 133.793)
+position = Vector2(-180.116, -26.2729)
 
 [node name="Path2D" type="Path2D" parent="Player"]
 curve = SubResource("Curve2D_ry3ra")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
 unique_name_in_owner = true
-position = Vector2(30, -916)
-rotation = 0.568913
+position = Vector2(214.164, -1586.79)
+rotation = 0.567669
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/game over/CenterContainer/VBoxContainer2/VBoxContainer/retry" to="." method="_on_retry_pressed"]

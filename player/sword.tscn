@@ -12,14 +12,14 @@ size = Vector2(72, 358)
 offsets = PackedFloat32Array(0, 0.523166, 1)
 colors = PackedColorArray(1, 0.34902, 0, 1, 0.904094, 0.215509, 3.85046e-07, 1, 0.870588, 0, 0.054902, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_upjou"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2tccq"]
 gradient = SubResource("Gradient_biebc")
 
 [sub_resource type="Curve" id="Curve_8vhpt"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.20283), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_vewjm"]
+[sub_resource type="CurveTexture" id="CurveTexture_e1lfu"]
 curve = SubResource("Curve_8vhpt")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxavc"]
@@ -29,8 +29,8 @@ linear_accel_min = 55.11
 linear_accel_max = 55.11
 scale_min = 3.0
 scale_max = 5.0
-scale_curve = SubResource("CurveTexture_vewjm")
-color_ramp = SubResource("GradientTexture1D_upjou")
+scale_curve = SubResource("CurveTexture_e1lfu")
+color_ramp = SubResource("GradientTexture1D_2tccq")
 turbulence_enabled = true
 turbulence_noise_strength = 8.61
 turbulence_noise_scale = 10.145
@@ -69,6 +69,7 @@ turbulence_initial_displacement_min = -100.0
 turbulence_initial_displacement_max = 50.0
 
 [node name="sword" type="Node2D"]
+process_mode = 1
 position = Vector2(0, -70)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ryq3o")
@@ -84,7 +85,6 @@ texture = SubResource("CompressedTexture2D_17ij7")
 [node name="Area2D" type="Area2D" parent="pivot/sword"]
 position = Vector2(-0.0936737, -106)
 rotation = -1.57168
-scale = Vector2(1, 1)
 collision_layer = 0
 collision_mask = 4
 

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const SPEED = 150
-var health = 5
-var maxhealth = 5
+var health = 3
+var maxhealth = 3
 
 @onready var player = get_node("/root/world/Player")
 
@@ -24,6 +24,8 @@ func _physics_process(delta: float) -> void:
 		%HPBar.visible = true
 	else:
 		%HPBar.visible = false
+	
+
 	
 
 func gethit(damage):

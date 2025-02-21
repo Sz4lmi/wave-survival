@@ -1,7 +1,23 @@
 extends Node2D
 
+var elapsed_time = 0.0
+var difficulty_level = 1
+
 func _ready() -> void:
 	%"game over".visible = false
+	%paused.visible = false
+
+func _process(delta: float) -> void:
+	elapsed_time += delta
+	if elapsed_time > 20:
+		difficulty_level += 1
+		elapsed_time = 0.0
+	if Input.is_action_just_pressed("pause"):
+		get_tree().paused = !get_tree().paused
+	if get_tree().paused == true:
+		%paused.visible = true
+	else:
+		%paused.visible = false
 
 func spawn_enemy():
 	const ENEMY = preload("res://enemy/pawn_enemy.tscn")

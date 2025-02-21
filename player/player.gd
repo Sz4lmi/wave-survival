@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
+var elapsed_time = 0.0
 var speed = 500
 var maxhealth = 100.0
 var health = 100.0
 var damage = 5.0
 var xp = 0
-var xp_to_level_up = 25
+var xp_to_level_up = 15
 var currentlevel = 1
-var attackdamage = 1
+var attackdamage = 1.0
 
 #SWORD
 const SWORD = preload("res://player/sword.tscn")
@@ -26,6 +27,7 @@ var arrowcount = 1
 var attackrange = 1
 var bows = []
 var arrowrange = 1200
+var max_pierce = 0
 
 var selected_weapon = ""
 var current_weapon_upgrades = []
@@ -109,6 +111,7 @@ func _on_weapon2_pressed():
 func _on_weapon3_pressed():
 	selected_weapon = "shield"
 	current_weapon_upgrades = weapons[selected_weapon]["upgrades"]
+	%AnimatedSprite2D.play("pawn_with_shield")
 	start_game()
 
 func start_game():
@@ -123,13 +126,18 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed
 	move_and_slide()
 	
+	elapsed_time += delta
+	var minutes = int(elapsed_time) / 60
+	var seconds = int(elapsed_time) % 60
+	%Time.text = str(minutes).pad_zeros(2) + ":" + str(seconds).pad_zeros(2)
+	
 	%HPBar.value = health
 	%HPBar.max_value = maxhealth
 	
 	if velocity.length() > 0.0:
 		%AnimationPlayer.play("walk")
 	else:
-		%AnimationPlayer.play("idle")
+		%AnimationPlayer.play("RESET")
 	
 	var mobs = %hurtbox.get_overlapping_bodies()
 	if mobs.size() > 0:
@@ -140,6 +148,10 @@ func _physics_process(delta: float) -> void:
 	for sword in swords:
 		sword.rotation_degrees += sword_rotation_speed * delta
 		sword.damage = attackdamage
+	
+	for bow in bows:
+		bow.damage = attackdamage
+		bow.max_pierce = max_pierce
 
 func collectxp():
 	xp += randf_range(4.2, 6.9)
@@ -156,6 +168,7 @@ func levelup():
 	%XPLabel.text = str(currentlevel)
 	show_level_up_screen()
 	health += ((maxhealth-health)/2.0)
+
 
 var random_upgrades = []
 func show_level_up_screen():
@@ -403,8 +416,9 @@ func increase_poison(upgrade): #WORKS
 
 
 #BOWANDARROW
-func increase_arrow_damage(upgrade):#TODO
+func increase_arrow_damage(upgrade):#WORKS
 	upgrade["level"] += 1
+	attackdamage = attackdamage * 1.33
 	%Upgrade1.visible = true
 	%Name1.text = upgrade["name"]
 	match upgrade["level"]:
@@ -491,10 +505,9 @@ func increase_projectile_count(upgrade):#WORKS
 		5:
 			%Bar20.visible = true
 
-func increase_piercing_arrows(upgrade):#TODO
+func increase_piercing_arrows(upgrade):#WORKS
 	upgrade["level"] += 1
-	for bow in bows:
-		bow.piercing = true
+	max_pierce += 1
 	%Upgrade5.visible = true
 	%Name5.text = upgrade["name"]
 	match upgrade["level"]:
@@ -513,7 +526,7 @@ func increase_piercing_arrows(upgrade):#TODO
 		5:
 			%Bar25.visible = true
 
-func increase_flaming_arrows(upgrade):#TODO
+func increase_flaming_arrows(upgrade):#WORKS
 	upgrade["level"] += 1
 	for bow in bows:
 		bow.onfire = true
