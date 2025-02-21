@@ -11,13 +11,10 @@ atlas = ExtResource("2_2046x")
 region = Rect2(0, 0, 500, 500)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fohc5"]
-load_path = "res://.godot/imported/4.png-59f90d2603212c6302285cebb176551d.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qruvk"]
-load_path = "res://.godot/imported/5.png-ef89e8a87c573b8d59cc7406fcdd24b6.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_13lvu"]
-load_path = "res://.godot/imported/6.png-f9d63503950ce758a4468d886d9cbedc.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_muyjg"]
 animations = [{
@@ -60,6 +57,7 @@ animations = [{
 }]
 
 [node name="bow" type="Area2D"]
+process_mode = 1
 position = Vector2(0, -60)
 collision_layer = 0
 collision_mask = 4

@@ -3,9 +3,11 @@ extends Area2D
 const SPEED = 1000
 var range = 1200
 var travelled_distance = 0
-var damage = 5
-var piercing = false
+var damage
+var piercecount = 0
+var max_pierce
 var onfire = false
+var firelevel = 2
 
 
 func _physics_process(delta: float) -> void:
@@ -14,12 +16,18 @@ func _physics_process(delta: float) -> void:
 	travelled_distance += SPEED * delta
 	if travelled_distance > range:
 		queue_free()
+	if onfire == true:
+		%flame.visible = true
+	else:
+		%flame.visible = false
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("gethit"):
 		body.gethit(damage)
-		if onfire == true:
-			body.setonfire(3)
-		if piercing == false:
+		piercecount += 1
+		
+		if piercecount > max_pierce:
 			queue_free()
-	print(damage)
+			
+		if onfire == true:
+			body.setonfire(firelevel)
